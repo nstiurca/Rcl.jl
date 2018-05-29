@@ -1,0 +1,6 @@
+name = "ROS2"
+uuid = "78a8c452-60eb-11e8-3cb2-e7ea7ae9c7f8"
+version = "0.1.0"
+authors = ["Nicu Stiurca <supernic2002@gmail.com>"]
+
+[deps]
