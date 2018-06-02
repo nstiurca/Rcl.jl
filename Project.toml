@@ -1,6 +1,8 @@
+authors = ["Nicu Stiurca <supernic2002@gmail.com>"]
 name = "ROS2"
 uuid = "78a8c452-60eb-11e8-3cb2-e7ea7ae9c7f8"
 version = "0.1.0"
-authors = ["Nicu Stiurca <supernic2002@gmail.com>"]
 
 [deps]
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
