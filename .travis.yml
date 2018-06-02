@@ -1,4 +1,18 @@
 language: julia
 julia:
   - nightly
-  - 0.7.0-alpha
+  # - 0.7.0-alpha
+
+addons:
+  apt:
+    sources:
+      - sourceline: deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main xenial main
+      - key_url: http://repo.ros2.org/repos.key
+    packages:
+      - ros-ardent-rcl
+      - ros-ardent-rcl-interfaces
+      - ros-ardent-rmw-implementation
+      - ros-ardent-rosidl-default-runtime
+
+before_script: |
+  source /opt/ardent/setup.bash
