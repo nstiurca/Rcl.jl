@@ -1,0 +1,4 @@
+language: julia
+julia:
+  - nightly
+  - 0.7.0-alpha
