@@ -8,16 +8,18 @@ const ROS_DISTRO = ENV["ROS_DISTRO"]
 @assert ROS_DISTRO == "ardent" "Only ardent release is supported by this package."
 
 
-macro load_lib_symbols(lib::AbstractString, syms...)
+macro load_lib_symbols(lib::AbstractString, syms::QuoteNode...)
+    syms = Symbol[sym.value for sym in syms]
     # @show syms
 
-    lib_names = ["lib$lib.$(Libdl.dlext)", "lib$lib.so"]
+    # lib_names = ["lib$lib.$(Libdl.dlext)", "lib$lib.so"]
     LIB_NAME = Symbol("$(uppercase(lib))_LIB_NAME")
     LIB = Symbol("$(uppercase(lib))_LIB")
 
     expr = quote
         # TODO: also search /opt/ros/$ROS_DISTRO, etc.
-        const $LIB_NAME = find_library($lib_names)
+        # const $LIB_NAME = find_library($lib_names)
+        const $LIB_NAME = find_library("lib$lib.$(Libdl.dlext)")
         if isempty($LIB_NAME)
             # touch this file so that after the user properly built the library,
             # the precompiled ROS2.ji will be re-compiled to get $LIB_NAME working properly
@@ -30,13 +32,13 @@ macro load_lib_symbols(lib::AbstractString, syms...)
         const $LIB = dlopen($LIB_NAME)
     end
 
-    @show "INITIAL EXPRESSION"
-    @show expr
+    # @show "INITIAL EXPRESSION"
+    # @show expr
     # return expr
-    @show "================"
+    # @show "================"
 
     syms = map(syms) do sym
-        :(const $(sym.value) = dlsym($LIB, $sym))
+        :(const $sym = dlsym($LIB, $sym))
     end
 
     # for sym in syms
@@ -47,10 +49,10 @@ macro load_lib_symbols(lib::AbstractString, syms...)
     #     push!(expr.args, sym_expr)
     # end
 
-    @show "FINAL EXPRESSION"
-    @show expr
-    @show syms
-    @show "====================="
+    # @show "FINAL EXPRESSION"
+    # @show expr
+    # @show syms
+    # @show "====================="
 
     return expr
 end
@@ -63,14 +65,14 @@ end
 )
 
 
-@show RCL_LIB
-@show rcl_ok
+# @show RCL_LIB
+# @show rcl_ok
 
-# @load_lib_symbols "rcutils" begin
-#     rcutils_get_zero_initialized_allocator
-#     rcutils_get_default_allocator
-#     rcutils_allocator_is_valid
-# end
+@load_lib_symbols("rcutils",
+    :rcutils_get_zero_initialized_allocator,
+    :rcutils_get_default_allocator,
+    :rcutils_allocator_is_valid,
+)
 
 
 
