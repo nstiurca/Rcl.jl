@@ -27,11 +27,11 @@ const RCUTILS_RET_LOGGING_SEVERITY_MAP_INVALID = 40
 const rcutils_ret_t = Cint
 
 mutable struct rcutils_allocator_t
-    allocate::Ptr{Void}
-    deallocate::Ptr{Void}
-    reallocate::Ptr{Void}
-    zero_allocate::Ptr{Void}
-    state::Ptr{Void}
+    allocate::Ptr{Cvoid}
+    deallocate::Ptr{Cvoid}
+    reallocate::Ptr{Cvoid}
+    zero_allocate::Ptr{Cvoid}
+    state::Ptr{Cvoid}
 end
 
 # Skipping MacroDefinition: RCL_WARN_UNUSED __attribute__ ( ( warn_unused_result ) ) #
@@ -114,64 +114,64 @@ const rmw_ret_t = Cint
 
 mutable struct rmw_node_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     name::Cstring
     namespace_::Cstring
 end
 
 mutable struct rmw_publisher_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     topic_name::Cstring
 end
 
 mutable struct rmw_subscription_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     topic_name::Cstring
 end
 
 mutable struct rmw_service_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     service_name::Cstring
 end
 
 mutable struct rmw_client_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     service_name::Cstring
 end
 
 mutable struct rmw_guard_condition_t
     implementation_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
 end
 
 mutable struct rmw_subscriptions_t
     subscriber_count::Csize_t
-    subscribers::Ptr{Ptr{Void}}
+    subscribers::Ptr{Ptr{Cvoid}}
 end
 
 mutable struct rmw_services_t
     service_count::Csize_t
-    services::Ptr{Ptr{Void}}
+    services::Ptr{Ptr{Cvoid}}
 end
 
 mutable struct rmw_clients_t
     client_count::Csize_t
-    clients::Ptr{Ptr{Void}}
+    clients::Ptr{Ptr{Cvoid}}
 end
 
 mutable struct rmw_guard_conditions_t
     guard_condition_count::Csize_t
-    guard_conditions::Ptr{Ptr{Void}}
+    guard_conditions::Ptr{Ptr{Cvoid}}
 end
 
 mutable struct rmw_wait_set_t
     implementation_identifier::Cstring
     guard_conditions::Ptr{rmw_guard_conditions_t}
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
 end
 
 mutable struct rmw_request_id_t
@@ -191,7 +191,7 @@ const RMW_SECURITY_ENFORCEMENT_ENFORCE = (UInt32)(1)
 # end enum rmw_security_enforcement_policy_t
 
 mutable struct rmw_node_security_options_t
-    enforce_security::Void
+    enforce_security::Cvoid
     security_root_path::Cstring
 end
 
@@ -217,10 +217,10 @@ const RMW_QOS_POLICY_DURABILITY_VOLATILE = (UInt32)(2)
 # end enum rmw_qos_durability_policy_t
 
 mutable struct rmw_qos_profile_t
-    history::Void
+    history::Cvoid
     depth::Csize_t
-    reliability::Void
-    durability::Void
+    reliability::Cvoid
+    durability::Cvoid
     avoid_ros_namespace_conventions::Bool
 end
 
@@ -242,14 +242,14 @@ const RMW_QOS_POLICY_DEPTH_SYSTEM_DEFAULT = (UInt32)(0)
 const rcl_ret_t = rmw_ret_t
 
 mutable struct rcl_guard_condition_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_node_impl_t
 end
 
 mutable struct rcl_node_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_node_options_t
@@ -257,11 +257,11 @@ mutable struct rcl_node_options_t
     allocator::rcl_allocator_t
 end
 
-const rosidl_message_typesupport_handle_function = Ptr{Void}
+const rosidl_message_typesupport_handle_function = Ptr{Cvoid}
 
 mutable struct rosidl_message_type_support_t
     typesupport_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     func::rosidl_message_typesupport_handle_function
 end
 
@@ -269,7 +269,7 @@ mutable struct rcl_publisher_impl_t
 end
 
 mutable struct rcl_publisher_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_publisher_options_t
@@ -281,7 +281,7 @@ mutable struct rcl_subscription_impl_t
 end
 
 mutable struct rcl_subscription_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_subscription_options_t
@@ -290,11 +290,11 @@ mutable struct rcl_subscription_options_t
     allocator::rcl_allocator_t
 end
 
-const rosidl_service_typesupport_handle_function = Ptr{Void}
+const rosidl_service_typesupport_handle_function = Ptr{Cvoid}
 
 mutable struct rosidl_service_type_support_t
     typesupport_identifier::Cstring
-    data::Ptr{Void}
+    data::Ptr{Cvoid}
     func::rosidl_service_typesupport_handle_function
 end
 
@@ -302,7 +302,7 @@ mutable struct rcl_client_impl_t
 end
 
 mutable struct rcl_client_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_client_options_t
@@ -321,7 +321,7 @@ mutable struct rcl_service_impl_t
 end
 
 mutable struct rcl_service_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 mutable struct rcl_service_options_t
@@ -339,7 +339,7 @@ mutable struct rcutils_string_map_impl_t
 end
 
 mutable struct rcutils_string_map_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
 const rcutils_time_point_value_t = UInt64
@@ -356,11 +356,11 @@ const RCL_STEADY_TIME = (UInt32)(3)
 # end enum rcl_clock_type_t
 
 mutable struct rcl_clock_t
-    _type::Void
-    pre_update::Ptr{Void}
-    post_update::Ptr{Void}
-    get_now::Ptr{Void}
-    data::Ptr{Void}
+    _type::Cvoid
+    pre_update::Ptr{Cvoid}
+    post_update::Ptr{Cvoid}
+    get_now::Ptr{Cvoid}
+    data::Ptr{Cvoid}
     allocator::Ptr{rcl_allocator_t}
 end
 
@@ -377,10 +377,10 @@ mutable struct rcl_timer_impl_t
 end
 
 mutable struct rcl_timer_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end
 
-const rcl_timer_callback_t = Ptr{Void}
+const rcl_timer_callback_t = Ptr{Cvoid}
 
 mutable struct rcl_wait_set_impl_t
 end
@@ -396,5 +396,5 @@ mutable struct rcl_wait_set_t
     size_of_clients::Csize_t
     services::Ptr{Ptr{rcl_service_t}}
     size_of_services::Csize_t
-    impl::Ptr{Void}
+    impl::Ptr{Cvoid}
 end

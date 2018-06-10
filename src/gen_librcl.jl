@@ -15,7 +15,7 @@ function rcutils_allocator_is_valid(allocator)
 end
 
 function rcutils_reallocf(pointer, size::Csize_t, allocator)
-    ccall((:rcutils_reallocf, librcutils), Ptr{Void}, (Ptr{Void}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
+    ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
 end
 # Julia wrapper for header: /opt/ros/ardent/include/rcl/rcl.h
 # Automatically generated using Clang.jl wrap_c, version 0.0.0
@@ -34,7 +34,7 @@ function rcutils_allocator_is_valid(allocator)
 end
 
 function rcutils_reallocf(pointer, size::Csize_t, allocator)
-    ccall((:rcutils_reallocf, librcutils), Ptr{Void}, (Ptr{Void}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
+    ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
 end
 
 function rcl_get_zero_initialized_node()
@@ -82,7 +82,7 @@ function rcl_node_get_rcl_instance_id(node)
 end
 
 function rcl_node_get_graph_guard_condition(node)
-    ccall((:rcl_node_get_graph_guard_condition, librcl), Ptr{Void}, (Ptr{rcl_node_t},), node)
+    ccall((:rcl_node_get_graph_guard_condition, librcl), Ptr{Cvoid}, (Ptr{rcl_node_t},), node)
 end
 
 function get_message_typesupport_handle(handle, identifier)
@@ -110,7 +110,7 @@ function rcl_publisher_get_default_options()
 end
 
 function rcl_publish(publisher, ros_message)
-    ccall((:rcl_publish, librcl), rcl_ret_t, (Ptr{rcl_publisher_t}, Ptr{Void}), publisher, ros_message)
+    ccall((:rcl_publish, librcl), rcl_ret_t, (Ptr{rcl_publisher_t}, Ptr{Cvoid}), publisher, ros_message)
 end
 
 function rcl_publisher_get_topic_name(publisher)
@@ -146,7 +146,7 @@ function rcl_subscription_get_default_options()
 end
 
 function rcl_take(subscription, ros_message, message_info)
-    ccall((:rcl_take, librcl), rcl_ret_t, (Ptr{rcl_subscription_t}, Ptr{Void}, Ptr{rmw_message_info_t}), subscription, ros_message, message_info)
+    ccall((:rcl_take, librcl), rcl_ret_t, (Ptr{rcl_subscription_t}, Ptr{Cvoid}, Ptr{rmw_message_info_t}), subscription, ros_message, message_info)
 end
 
 function rcl_subscription_get_topic_name(subscription)
@@ -190,11 +190,11 @@ function rcl_client_get_default_options()
 end
 
 function rcl_send_request(client, ros_request, sequence_number)
-    ccall((:rcl_send_request, librcl), rcl_ret_t, (Ptr{rcl_client_t}, Ptr{Void}, Ptr{Int64}), client, ros_request, sequence_number)
+    ccall((:rcl_send_request, librcl), rcl_ret_t, (Ptr{rcl_client_t}, Ptr{Cvoid}, Ptr{Int64}), client, ros_request, sequence_number)
 end
 
 function rcl_take_response(client, request_header, ros_response)
-    ccall((:rcl_take_response, librcl), rcl_ret_t, (Ptr{rcl_client_t}, Ptr{rmw_request_id_t}, Ptr{Void}), client, request_header, ros_response)
+    ccall((:rcl_take_response, librcl), rcl_ret_t, (Ptr{rcl_client_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}), client, request_header, ros_response)
 end
 
 function rcl_client_get_service_name(client)
@@ -262,11 +262,11 @@ function rcl_service_get_default_options()
 end
 
 function rcl_take_request(service, request_header, ros_request)
-    ccall((:rcl_take_request, librcl), rcl_ret_t, (Ptr{rcl_service_t}, Ptr{rmw_request_id_t}, Ptr{Void}), service, request_header, ros_request)
+    ccall((:rcl_take_request, librcl), rcl_ret_t, (Ptr{rcl_service_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}), service, request_header, ros_request)
 end
 
 function rcl_send_response(service, response_header, ros_response)
-    ccall((:rcl_send_response, librcl), rcl_ret_t, (Ptr{rcl_service_t}, Ptr{rmw_request_id_t}, Ptr{Void}), service, response_header, ros_response)
+    ccall((:rcl_send_response, librcl), rcl_ret_t, (Ptr{rcl_service_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}), service, response_header, ros_response)
 end
 
 function rcl_service_get_service_name(service)
@@ -373,8 +373,8 @@ function rcl_clock_valid(clock)
     ccall((:rcl_clock_valid, librcl), Bool, (Ptr{rcl_clock_t},), clock)
 end
 
-function rcl_clock_init(clock_type::Void, clock, allocator)
-    ccall((:rcl_clock_init, librcl), rcl_ret_t, (Void, Ptr{rcl_clock_t}, Ptr{rcl_allocator_t}), clock_type, clock, allocator)
+function rcl_clock_init(clock_type::Cvoid, clock, allocator)
+    ccall((:rcl_clock_init, librcl), rcl_ret_t, (Cvoid, Ptr{rcl_clock_t}, Ptr{rcl_allocator_t}), clock_type, clock, allocator)
 end
 
 function rcl_clock_fini(clock)
@@ -458,7 +458,7 @@ function rmw_destroy_publisher(node, publisher)
 end
 
 function rmw_publish(publisher, ros_message)
-    ccall((:rmw_publish, librmw), rmw_ret_t, (Ptr{rmw_publisher_t}, Ptr{Void}), publisher, ros_message)
+    ccall((:rmw_publish, librmw), rmw_ret_t, (Ptr{rmw_publisher_t}, Ptr{Cvoid}), publisher, ros_message)
 end
 
 function rmw_create_subscription(node, type_support, topic_name, qos_policies, ignore_local_publications::Bool)
@@ -470,11 +470,11 @@ function rmw_destroy_subscription(node, subscription)
 end
 
 function rmw_take(subscription, ros_message, taken)
-    ccall((:rmw_take, librmw), rmw_ret_t, (Ptr{rmw_subscription_t}, Ptr{Void}, Ptr{Bool}), subscription, ros_message, taken)
+    ccall((:rmw_take, librmw), rmw_ret_t, (Ptr{rmw_subscription_t}, Ptr{Cvoid}, Ptr{Bool}), subscription, ros_message, taken)
 end
 
 function rmw_take_with_info(subscription, ros_message, taken, message_info)
-    ccall((:rmw_take_with_info, librmw), rmw_ret_t, (Ptr{rmw_subscription_t}, Ptr{Void}, Ptr{Bool}, Ptr{rmw_message_info_t}), subscription, ros_message, taken, message_info)
+    ccall((:rmw_take_with_info, librmw), rmw_ret_t, (Ptr{rmw_subscription_t}, Ptr{Cvoid}, Ptr{Bool}, Ptr{rmw_message_info_t}), subscription, ros_message, taken, message_info)
 end
 
 function rmw_create_client(node, type_support, service_name, qos_policies)
@@ -486,11 +486,11 @@ function rmw_destroy_client(node, client)
 end
 
 function rmw_send_request(client, ros_request, sequence_id)
-    ccall((:rmw_send_request, librmw), rmw_ret_t, (Ptr{rmw_client_t}, Ptr{Void}, Ptr{Int64}), client, ros_request, sequence_id)
+    ccall((:rmw_send_request, librmw), rmw_ret_t, (Ptr{rmw_client_t}, Ptr{Cvoid}, Ptr{Int64}), client, ros_request, sequence_id)
 end
 
 function rmw_take_response(client, request_header, ros_response, taken)
-    ccall((:rmw_take_response, librmw), rmw_ret_t, (Ptr{rmw_client_t}, Ptr{rmw_request_id_t}, Ptr{Void}, Ptr{Bool}), client, request_header, ros_response, taken)
+    ccall((:rmw_take_response, librmw), rmw_ret_t, (Ptr{rmw_client_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}, Ptr{Bool}), client, request_header, ros_response, taken)
 end
 
 function rmw_create_service(node, type_support, service_name, qos_policies)
@@ -502,11 +502,11 @@ function rmw_destroy_service(node, service)
 end
 
 function rmw_take_request(service, request_header, ros_request, taken)
-    ccall((:rmw_take_request, librmw), rmw_ret_t, (Ptr{rmw_service_t}, Ptr{rmw_request_id_t}, Ptr{Void}, Ptr{Bool}), service, request_header, ros_request, taken)
+    ccall((:rmw_take_request, librmw), rmw_ret_t, (Ptr{rmw_service_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}, Ptr{Bool}), service, request_header, ros_request, taken)
 end
 
 function rmw_send_response(service, request_header, ros_response)
-    ccall((:rmw_send_response, librmw), rmw_ret_t, (Ptr{rmw_service_t}, Ptr{rmw_request_id_t}, Ptr{Void}), service, request_header, ros_response)
+    ccall((:rmw_send_response, librmw), rmw_ret_t, (Ptr{rmw_service_t}, Ptr{rmw_request_id_t}, Ptr{Cvoid}), service, request_header, ros_response)
 end
 
 function rmw_create_guard_condition()
