@@ -1,5 +1,6 @@
 module ROS2
 
+include("librcl.jl")
 include("base.jl")
 # include("node_handle.jl")
 

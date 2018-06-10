@@ -9,12 +9,14 @@ using Test
     @test ROS2.instance_id() == 0
 
     # initialize
-    ROS2.init()
+    ret = ROS2.init()
+    @test ret == ROS2.LibRcl.RCL_RET_OK
     @test ROS2.ok() == true
     @test ROS2.instance_id() != 0
 
     # shut down
-    ROS2.shutdown()
+    ret = ROS2.shutdown()
+    @test ret == ROS2.LibRcl.RCL_RET_OK
     @test ROS2.ok() == false
     @test ROS2.instance_id() == 0
 end
