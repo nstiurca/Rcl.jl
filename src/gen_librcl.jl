@@ -17,6 +17,57 @@ end
 function rcutils_reallocf(pointer, size::Csize_t, allocator)
     ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
 end
+# Julia wrapper for header: /opt/ros/ardent/include/rcutils/error_handling.h
+# Automatically generated using Clang.jl wrap_c, version 0.0.0
+
+
+function rcutils_get_zero_initialized_allocator()
+    ccall((:rcutils_get_zero_initialized_allocator, librcutils), rcutils_allocator_t, ())
+end
+
+function rcutils_get_default_allocator()
+    ccall((:rcutils_get_default_allocator, librcutils), rcutils_allocator_t, ())
+end
+
+function rcutils_allocator_is_valid(allocator)
+    ccall((:rcutils_allocator_is_valid, librcutils), Bool, (Ptr{rcutils_allocator_t},), allocator)
+end
+
+function rcutils_reallocf(pointer, size::Csize_t, allocator)
+    ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
+end
+
+function rcutils_error_state_copy(src, dst)
+    ccall((:rcutils_error_state_copy, librcutils), rcutils_ret_t, (Ptr{rcutils_error_state_t}, Ptr{rcutils_error_state_t}), src, dst)
+end
+
+function rcutils_error_state_fini(error_state)
+    ccall((:rcutils_error_state_fini, librcutils), Cvoid, (Ptr{rcutils_error_state_t},), error_state)
+end
+
+function rcutils_set_error_state(error_msg, file, line_number::Csize_t, allocator::rcutils_allocator_t)
+    ccall((:rcutils_set_error_state, librcutils), Cvoid, (Cstring, Cstring, Csize_t, rcutils_allocator_t), error_msg, file, line_number, allocator)
+end
+
+function rcutils_error_is_set()
+    ccall((:rcutils_error_is_set, librcutils), Bool, ())
+end
+
+function rcutils_get_error_state()
+    ccall((:rcutils_get_error_state, librcutils), Ptr{rcutils_error_state_t}, ())
+end
+
+function rcutils_get_error_string()
+    ccall((:rcutils_get_error_string, librcutils), Cstring, ())
+end
+
+function rcutils_get_error_string_safe()
+    ccall((:rcutils_get_error_string_safe, librcutils), Cstring, ())
+end
+
+function rcutils_reset_error()
+    ccall((:rcutils_reset_error, librcutils), Cvoid, ())
+end
 # Julia wrapper for header: /opt/ros/ardent/include/rcl/rcl.h
 # Automatically generated using Clang.jl wrap_c, version 0.0.0
 

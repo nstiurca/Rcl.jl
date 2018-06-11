@@ -34,6 +34,19 @@ mutable struct rcutils_allocator_t
     state::Ptr{Cvoid}
 end
 
+# Skipping MacroDefinition: RCUTILS_SAFE_FWRITE_TO_STDERR ( msg ) fwrite ( msg , sizeof ( char ) , strlen ( msg ) , stderr ) #
+# Skipping MacroDefinition: RCUTILS_CHECK_ARGUMENT_FOR_NULL ( argument , error_return_type , allocator ) RCUTILS_CHECK_FOR_NULL_WITH_MSG ( argument , # argument " argument is null" , return error_return_type , allocator ) /// Check a value for null, with an error message and error statement.
+# Skipping MacroDefinition: RCUTILS_CHECK_FOR_NULL_WITH_MSG ( value , msg , error_statement , allocator ) if ( ! ( value ) ) { RCUTILS_SET_ERROR_MSG ( msg , allocator ) ; error_statement ; } /// Set the error message, as well as append the current file and line number.
+# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG ( msg , allocator ) rcutils_set_error_state ( msg , __FILE__ , __LINE__ , allocator ) ; /// Set the error message using a format string and format arguments.
+# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING ( allocator , format_string , ... ) do { char * output_msg = NULL ; output_msg = rcutils_format_string ( allocator , format_string , __VA_ARGS__ ) ; if ( output_msg ) { RCUTILS_SET_ERROR_MSG ( output_msg , allocator ) ; allocator . deallocate ( output_msg , allocator . state ) ; } else { RCUTILS_SAFE_FWRITE_TO_STDERR ( "Failed to allocate memory for error message\n" ) ; } } while ( false ) /// Return `true` if the error is set, otherwise `false`.
+
+mutable struct rcutils_error_state_t
+    message::Cstring
+    file::Cstring
+    line_number::Csize_t
+    allocator::rcutils_allocator_t
+end
+
 # Skipping MacroDefinition: RCL_WARN_UNUSED __attribute__ ( ( warn_unused_result ) ) #
 
 const rcl_get_default_allocator = rcutils_get_default_allocator
