@@ -17,6 +17,73 @@ end
 function rcutils_reallocf(pointer, size::Csize_t, allocator)
     ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
 end
+# Julia wrapper for header: /opt/ros/ardent/include/rcl/node.h
+# Automatically generated using Clang.jl wrap_c, version 0.0.0
+
+
+function rcutils_get_zero_initialized_allocator()
+    ccall((:rcutils_get_zero_initialized_allocator, librcutils), rcutils_allocator_t, ())
+end
+
+function rcutils_get_default_allocator()
+    ccall((:rcutils_get_default_allocator, librcutils), rcutils_allocator_t, ())
+end
+
+function rcutils_allocator_is_valid(allocator)
+    ccall((:rcutils_allocator_is_valid, librcutils), Bool, (Ptr{rcutils_allocator_t},), allocator)
+end
+
+function rcutils_reallocf(pointer, size::Csize_t, allocator)
+    ccall((:rcutils_reallocf, librcutils), Ptr{Cvoid}, (Ptr{Cvoid}, Csize_t, Ptr{rcutils_allocator_t}), pointer, size, allocator)
+end
+
+function rcl_get_zero_initialized_node()
+    ccall((:rcl_get_zero_initialized_node, librcl), rcl_node_t, ())
+end
+
+function rcl_node_init(node, name, namespace_, options)
+    ccall((:rcl_node_init, librcl), rcl_ret_t, (Ptr{rcl_node_t}, Cstring, Cstring, Ptr{rcl_node_options_t}), node, name, namespace_, options)
+end
+
+function rcl_node_fini(node)
+    ccall((:rcl_node_fini, librcl), rcl_ret_t, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_default_options()
+    ccall((:rcl_node_get_default_options, librcl), rcl_node_options_t, ())
+end
+
+function rcl_node_is_valid(node, error_msg_allocator)
+    ccall((:rcl_node_is_valid, librcl), Bool, (Ptr{rcl_node_t}, Ptr{rcl_allocator_t}), node, error_msg_allocator)
+end
+
+function rcl_node_get_name(node)
+    ccall((:rcl_node_get_name, librcl), Cstring, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_namespace(node)
+    ccall((:rcl_node_get_namespace, librcl), Cstring, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_options(node)
+    ccall((:rcl_node_get_options, librcl), Ptr{rcl_node_options_t}, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_domain_id(node, domain_id)
+    ccall((:rcl_node_get_domain_id, librcl), rcl_ret_t, (Ptr{rcl_node_t}, Ptr{Csize_t}), node, domain_id)
+end
+
+function rcl_node_get_rmw_handle(node)
+    ccall((:rcl_node_get_rmw_handle, librcl), Ptr{rmw_node_t}, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_rcl_instance_id(node)
+    ccall((:rcl_node_get_rcl_instance_id, librcl), UInt64, (Ptr{rcl_node_t},), node)
+end
+
+function rcl_node_get_graph_guard_condition(node)
+    ccall((:rcl_node_get_graph_guard_condition, librcl), Ptr{Cvoid}, (Ptr{rcl_node_t},), node)
+end
 # Julia wrapper for header: /opt/ros/ardent/include/rcutils/error_handling.h
 # Automatically generated using Clang.jl wrap_c, version 0.0.0
 

@@ -2,7 +2,7 @@ module ROS2
 
 include("librcl.jl")
 include("base.jl")
-# include("node_handle.jl")
+include("node_base.jl")
 
 # abstract type Node end
 # abstract type Logger end

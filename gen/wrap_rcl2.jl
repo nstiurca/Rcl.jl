@@ -35,6 +35,7 @@ context = wrap_c.init(
 context.headers = [
     joinpath(ROS_INCLUDE_PATH, "rcutils", "allocator.h"),
     joinpath(ROS_INCLUDE_PATH, "rcutils", "error_handling.h"),
+    joinpath(ROS_INCLUDE_PATH, "rcl", "node.h"),
     joinpath(ROS_INCLUDE_PATH, "rcl", "rcl.h"),
     ]
 run(context)
