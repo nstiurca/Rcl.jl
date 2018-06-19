@@ -1,33 +1,33 @@
-module TestRos2NodeBase
+module TestRclNodeBase
 
-using ROS2
-import ROS2.LibRcl
+using Rcl
+import Rcl.internal: rcutils_error_is_set, rcutils_reset_error
 using Test
 
 @testset "Node init and fini" begin
     # initialize
-    @assert !ROS2.ok()
-    ROS2.init()
-    @assert ROS2.ok()
+    @assert !rcl.ok()
+    rcl.init()
+    @assert rcl.ok()
 
-    nb = ROS2.NodeBase("test_node")
-    @test ROS2.isvalid(nb)
+    nb = rcl.NodeBase("test_node")
+    @test rcl.isvalid(nb)
 
-    # @show which(ROS2.finalize, (ROS2.NodeBase,))
-    ROS2.finalize(nb)
+    # @show which(rcl.finalize, (rcl.NodeBase,))
+    rcl.finalize(nb)
     # finalizing it shouldn't cause errors
-    @test !ROS2.LibRcl.rcutils_error_is_set()
+    @test !rcutils_error_is_set()
     # But checking if the node is still valid apparently does set the error
     # TODO: file a bug about this with the rcl folks?
-    @test !ROS2.isvalid(nb)
-    @test ROS2.LibRcl.rcutils_error_is_set()
+    @test !rcl.isvalid(nb)
+    @test rcutils_error_is_set()
     # The error was expected so reset it
-    LibRcl.rcutils_reset_error()
+    rcutils_reset_error()
 
     # shutdown
-    @assert ROS2.ok()
-    ROS2.shutdown()
-    @assert !ROS2.ok()
+    @assert rcl.ok()
+    rcl.shutdown()
+    @assert !rcl.ok()
 end
 
-end # module TestRos2Base
+end # module TestRclBase

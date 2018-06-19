@@ -1,4 +1,4 @@
-using ROS2
+using Rcl
 using Test
 
 # run test in the whole directory, latest modified files
@@ -19,8 +19,6 @@ function run_tests(dir)
 end
 
 
-dir = "/home/nstiurca/codes/ROS2.jl/test/unit"
-
-@testset "ROS2 Test" begin
+@testset "Rcl Test" begin
     run_tests(joinpath(dirname(@__FILE__), "unit"))
 end

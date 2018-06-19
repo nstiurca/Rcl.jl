@@ -1,55 +1,55 @@
-module TestRos2Base
+module TestRclBase
 
-using ROS2
+using Rcl
 using Test
 
 @testset "init and shutdown" begin
     # uninitialized
-    @test ROS2.ok() == false
-    @test ROS2.instance_id() == 0
+    @test rcl.ok() == false
+    @test rcl.instance_id() == 0
 
     # initialize
-    ROS2.init()
-    @test ROS2.ok() == true
-    @test ROS2.instance_id() != 0
+    rcl.init()
+    @test rcl.ok() == true
+    @test rcl.instance_id() != 0
 
     # shut down
-    ROS2.shutdown()
-    @test ROS2.ok() == false
-    @test ROS2.instance_id() == 0
+    rcl.shutdown()
+    @test rcl.ok() == false
+    @test rcl.instance_id() == 0
 
     # init again
-    ROS2.init()
-    @test ROS2.ok() == true
-    @test ROS2.instance_id() != 0
+    rcl.init()
+    @test rcl.ok() == true
+    @test rcl.instance_id() != 0
 
     # shut down again
-    ROS2.shutdown()
-    @test ROS2.ok() == false
-    @test ROS2.instance_id() == 0
+    rcl.shutdown()
+    @test rcl.ok() == false
+    @test rcl.instance_id() == 0
 
     @testset "double init/shutdown exceptions" begin
         # uninitialized
-        @test !ROS2.ok()
+        @test !rcl.ok()
 
         # Initialize
-        ROS2.init()
-        @test ROS2.ok()
+        rcl.init()
+        @test rcl.ok()
 
         # Try to initialize again
-        @test_throws ROS2.RclError ROS2.init()
+        @test_throws RclError rcl.init()
 
         # Still initialized
-        @test ROS2.ok()
+        @test rcl.ok()
 
         # shutdown
-        ROS2.shutdown()
-        @test !ROS2.ok()
+        rcl.shutdown()
+        @test !rcl.ok()
 
         # Try to shut down again
-        @test_throws ROS2.RclError ROS2.shutdown()
-        @test !ROS2.ok()
+        @test_throws RclError rcl.shutdown()
+        @test !rcl.ok()
     end
 end
 
-end # module TestRos2Base
+end # module TestRclBase

@@ -1,4 +1,3 @@
-module LibRcl
 using Libdl
 
 # Define a few things that the Clang wrapper doesn't quite take care of for us
@@ -32,4 +31,20 @@ const librcutils = find_library(["librcutils.$dlext"], locations)
 # include the auto-gen-ed wrappers for the C functions/structs/constants
 include("gen_librcl_h.jl")
 include("gen_librcl.jl")
+
+struct RclError <: Exception
+    code :: Cint
+    msg :: AbstractString
+end
+
+function checkcall(code :: rcl_ret_t)
+    code == RCL_RET_OK && return nothing
+
+    msg = rcutils_get_error_string()
+    @assert msg != Cstring(C_NULL)
+    err = RclError(code, unsafe_string(msg))
+
+    rcutils_reset_error()
+
+    throw(err)
 end

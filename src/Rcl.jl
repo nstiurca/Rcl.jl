@@ -1,8 +1,18 @@
-module ROS2
+module Rcl
 
-include("librcl.jl")
+module internal
+include("internal.jl")
+end
+
+using .internal: RclError
+export RclError
+
+module rcl
 include("base.jl")
 include("node_base.jl")
+end
+
+export rcl
 
 # abstract type Node end
 # abstract type Logger end
