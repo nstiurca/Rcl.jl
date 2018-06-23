@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 
-language: julia
+# language: julia
 # julia:
   # - nightly
   # - 0.7.0-alpha
@@ -33,5 +33,9 @@ before_install:
   - docker pull osrf/ros2:ardent-core   # TODO: maybe ardent-basic might be better? we'll see
   - docker build . -t nstiurca/rcl.jl:$TAG --build-arg JULIA_VER=$JULIA_VER --build-arg JULIA_TARBALL_URL=$JULIA_TARBALL_URL
 
+before_script: |
+  docker run nstiurca/rcl.jl:$TAG julia -e 'versioninfo()'
+  docker run nstiurca/rcl.jl:$TAG apt-cache show ros-ardent-rcl'
+
 script: |
-  docker run nstiurca/rcl.jl:$TAG julia -e 'cd("Rcl"); using Pkg; Pkg.test("Rcl")'
+  docker run nstiurca/rcl.jl:$TAG julia -e 'using Pkg; Pkg.test("Rcl")'
