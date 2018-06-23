@@ -3,9 +3,9 @@ sudo: required
 services:
   - docker
 
-# language: julia
-# julia:
-  # - nightly
+language: julia
+julia:
+  - nightly
   # - 0.7.0-alpha
 
 addons:
