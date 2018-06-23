@@ -31,7 +31,7 @@ env:
 
 before_install:
   - docker pull osrf/ros2:ardent-core   # TODO: maybe ardent-basic might be better? we'll see
-  - docker build . -t nstiurca/rcl.jl:$TAG --build-arg JULIA_VER=$JULIA_VER JULIA_TARBALL_URL=$JULIA_TARBALL_URL
+  - docker build . -t nstiurca/rcl.jl:$TAG --build-arg JULIA_VER=$JULIA_VER --build-arg JULIA_TARBALL_URL=$JULIA_TARBALL_URL
 
 script: |
   docker run nstiurca/rcl.jl:$TAG julia -e 'cd("Rcl"); using Pkg; Pkg.test("Rcl")'
