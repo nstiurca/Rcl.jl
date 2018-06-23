@@ -24,7 +24,7 @@ addons:
 
 env:
   global:
-    - TAG=$TRAVIS_JOB_NUMBER-$TRAVIS_BRANCH
+    - TAG=travis-job-$TRAVIS_JOB_NUMBER
   matrix:
     - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
     - JULIA_VER=v0.7.0-alpha JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-alpha-linux-x86_64.tar.gz
