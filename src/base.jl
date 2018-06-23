@@ -9,3 +9,5 @@ shutdown() = internal.checkcall(internal.rcl_shutdown())
 ok() :: Bool = internal.rcl_ok()
 
 instance_id() :: UInt64 = internal.rcl_get_instance_id()
+
+function fini end

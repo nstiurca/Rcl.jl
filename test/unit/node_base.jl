@@ -13,10 +13,10 @@ using Test
     nb = rcl.NodeBase("test_node")
     @test rcl.isvalid(nb)
 
-    # @show which(rcl.finalize, (rcl.NodeBase,))
-    rcl.finalize(nb)
     # finalizing it shouldn't cause errors
+    finalize(nb)
     @test !rcutils_error_is_set()
+
     # But checking if the node is still valid apparently does set the error
     # TODO: file a bug about this with the rcl folks?
     @test !rcl.isvalid(nb)

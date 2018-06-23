@@ -37,7 +37,7 @@ struct RclError <: Exception
     msg :: AbstractString
 end
 
-function checkcall(code :: rcl_ret_t)
+function checkcall(code :: rcl_ret_t; suppress_throw=false)
     code == RCL_RET_OK && return nothing
 
     msg = rcutils_get_error_string()
@@ -46,5 +46,6 @@ function checkcall(code :: rcl_ret_t)
 
     rcutils_reset_error()
 
-    throw(err)
+    suppress_throw || throw(err)
+    err
 end
