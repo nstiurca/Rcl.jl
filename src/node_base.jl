@@ -3,19 +3,19 @@ mutable struct NodeBase
     rcl_node_handle::Ref{internal.rcl_node_t}
 
     NodeBase(node_name, namespace) = begin
-        rcl_node = finalizer(fini, Ref(internal.rcl_get_zero_initialized_node()))
+        rcl_node = Ref(internal.rcl_get_zero_initialized_node())
 
         default_options = Ref(internal.rcl_node_get_default_options())
 
         internal.checkcall(internal.rcl_node_init(rcl_node, node_name, namespace, default_options))
 
-        finalizer(fini, new(rcl_node))
+        new(rcl_node)
     end
 end
 
 NodeBase(node_name) = NodeBase(node_name, "")
-fini(rcl_node::Ref{internal.rcl_node_t}) = internal.checkcall(internal.rcl_node_fini(rcl_node); suppress_throw=true)
-fini(nb::NodeBase) = fini(nb.rcl_node_handle)
+Base.finalize(rcl_node::Ref{internal.rcl_node_t}) = internal.checkcall(internal.rcl_node_fini(rcl_node); suppress_throw=true)
+Base.finalize(nb::NodeBase) = finalize(nb.rcl_node_handle)
 
 mutable struct CallbackGroup
 end
