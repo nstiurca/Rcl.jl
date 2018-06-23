@@ -4,23 +4,34 @@ services:
   - docker
 
 language: julia
-julia:
-  - nightly
+# julia:
+  # - nightly
   # - 0.7.0-alpha
 
-# addons:
-#   apt:
+addons:
+  apt:
 #     sources:
 #       - sourceline: deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main xenial main
 #       - key_url: http://repo.ros2.org/repos.key
-#     packages:
+    packages:
+      - docker-ce
+# Travis is still running Trusty, but ROS2 is only available on Xenial and later
+# So, we can't just install from apt. :(
 #       - ros-ardent-rcl
 #       - ros-ardent-rcl-interfaces
 #       - ros-ardent-rmw-implementation
 #       - ros-ardent-rosidl-default-runtime
 
-before_install:
-  - docker pull osrf/ros2
+env:
+  global:
+    - TAG=$TRAVIS_JOB_NUMBER-$TRAVIS_BRANCH
+  matrix:
+    - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+    - JULIA_VER=v0.7.0-alpha JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-alpha-linux-x86_64.tar.gz
 
-before_script: |
-  source /opt/ardent/setup.bash
+before_install:
+  - docker pull osrf/ros2:ardent-core   # TODO: maybe ardent-basic might be better? we'll see
+  - docker build . -t nstiurca/rcl.jl:$TAG --build-arg JULIA_VER=$JULIA_VER JULIA_TARBALL_URL=$JULIA_TARBALL_URL
+
+script: |
+  docker run nstiurca/rcl.jl:$TAG julia -e 'cd("Rcl"); using Pkg; Pkg.test("Rcl")'
