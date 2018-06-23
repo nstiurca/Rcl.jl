@@ -35,7 +35,7 @@ before_install:
 
 before_script: |
   docker run nstiurca/rcl.jl:$TAG julia -e 'versioninfo()'
-  docker run nstiurca/rcl.jl:$TAG apt-cache show ros-ardent-rcl'
+  docker run nstiurca/rcl.jl:$TAG apt-cache show ros-ardent-rcl
 
 script: |
   docker run nstiurca/rcl.jl:$TAG julia -e 'using Pkg; Pkg.test("Rcl")'
