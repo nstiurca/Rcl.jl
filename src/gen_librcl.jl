@@ -264,9 +264,10 @@ function rcutils_logging_get_logger_effective_level(name)
     ccall((:rcutils_logging_get_logger_effective_level, librcutils), Cint, (Cstring,), name)
 end
 
-function rcutils_logging_console_output_handler(location, severity::Cint, name, timestamp::rcutils_time_point_value_t, format, args)
-    ccall((:rcutils_logging_console_output_handler, librcutils), Cvoid, (Ptr{rcutils_log_location_t}, Cint, Cstring, rcutils_time_point_value_t, Cstring, Ptr{va_list}), location, severity, name, timestamp, format, args)
-end
+# FIXME: handle variable args and comment back in
+# function rcutils_logging_console_output_handler(location, severity::Cint, name, timestamp::rcutils_time_point_value_t, format, args)
+#     ccall((:rcutils_logging_console_output_handler, librcutils), Cvoid, (Ptr{rcutils_log_location_t}, Cint, Cstring, rcutils_time_point_value_t, Cstring, Ptr{va_list}), location, severity, name, timestamp, format, args)
+# end
 
 function rcl_get_zero_initialized_arguments()
     ccall((:rcl_get_zero_initialized_arguments, librcl), rcl_arguments_t, ())
@@ -559,9 +560,10 @@ function rcutils_logging_get_logger_effective_level(name)
     ccall((:rcutils_logging_get_logger_effective_level, librcutils), Cint, (Cstring,), name)
 end
 
-function rcutils_logging_console_output_handler(location, severity::Cint, name, timestamp::rcutils_time_point_value_t, format, args)
-    ccall((:rcutils_logging_console_output_handler, librcutils), Cvoid, (Ptr{rcutils_log_location_t}, Cint, Cstring, rcutils_time_point_value_t, Cstring, Ptr{va_list}), location, severity, name, timestamp, format, args)
-end
+# FIXME: handle variable args and comment back in
+# function rcutils_logging_console_output_handler(location, severity::Cint, name, timestamp::rcutils_time_point_value_t, format, args)
+#     ccall((:rcutils_logging_console_output_handler, librcutils), Cvoid, (Ptr{rcutils_log_location_t}, Cint, Cstring, rcutils_time_point_value_t, Cstring, Ptr{va_list}), location, severity, name, timestamp, format, args)
+# end
 
 function rcl_get_zero_initialized_arguments()
     ccall((:rcl_get_zero_initialized_arguments, librcl), rcl_arguments_t, ())
