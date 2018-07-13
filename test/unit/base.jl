@@ -1,4 +1,4 @@
-module TestRclBase
+# module TestRclBase
 
 using Rcl
 using Test
@@ -52,4 +52,5 @@ using Test
     end
 end
 
-end # module TestRclBase
+# end # module TestRclBase
+nothing

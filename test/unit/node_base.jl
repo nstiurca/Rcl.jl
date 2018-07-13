@@ -1,28 +1,29 @@
-module TestRclNodeBase
+# module TestRclNodeBase
 
 using Rcl
 import Rcl.internal: rcutils_error_is_set, rcutils_reset_error
 using Test
 
-@testset "Node init and fini" begin
+@testset "Node" begin
     # initialize
     @assert !rcl.ok()
     rcl.init()
     @assert rcl.ok()
 
     nb = rcl.NodeBase("test_node")
-    @test rcl.isvalid(nb)
+    @assert rcl.isvalid(nb)
 
     # finalizing it shouldn't cause errors
     finalize(nb)
-    @test !rcutils_error_is_set()
+    @assert !rcutils_error_is_set()
 
     # But checking if the node is still valid apparently does set the error
     # TODO: file a bug about this with the rcl folks?
-    @test !rcl.isvalid(nb)
-    @test rcutils_error_is_set()
+    @assert !rcl.isvalid(nb)
+    @assert rcutils_error_is_set()
     # The error was expected so reset it
     rcutils_reset_error()
+    @assert !rcutils_error_is_set()
 
     # shutdown
     @assert rcl.ok()
@@ -30,4 +31,5 @@ using Test
     @assert !rcl.ok()
 end
 
-end # module TestRclBase
+# end # module TestRclBase
+nothing
