@@ -1,6 +1,6 @@
 FROM osrf/ros2:bouncy-core
 
-ARG JULIA_VER=julia-0.7.0-beta
+ARG JULIA_VER=0.7.0-beta
 ARG JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
 
 RUN apt-get update && apt-get install wget && apt-get clean
