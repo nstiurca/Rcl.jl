@@ -24,8 +24,8 @@ mutable struct NodeBase
 end
 
 NodeBase(node_name) = NodeBase(node_name, "")
-# Base.finalize(rcl_node::internal.rcl_node_t) = internal.checkcall(internal.rcl_node_fini(pointer_from_objref(rcl_node)); suppress_throw=true)
-# Base.finalize(nb::NodeBase) = finalize(nb.rcl_node)
+Base.finalize(rcl_node::internal.rcl_node_t) = internal.checkcall(internal.rcl_node_fini(pointer_from_objref(rcl_node)); suppress_throw=true)
+Base.finalize(nb::NodeBase) = finalize(nb.rcl_node)
 
 mutable struct CallbackGroup
 end
