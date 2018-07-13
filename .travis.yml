@@ -4,9 +4,9 @@ services:
   - docker
 
 language: julia
-julia:
-  - nightly
-  - 0.7.0-beta
+#julia:
+#  - nightly
+#  - 0.7.0-beta
 
 addons:
   apt:
@@ -25,12 +25,13 @@ addons:
 #env:
 #  global:
 #    - TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
-  #  - JULIA_VER=$TRAVIS_JULIA_VERSION
-  # matrix:
-  #   - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
-  #   - JULIA_VER=v0.7.0-beta JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
+#    - JULIA_VER=$TRAVIS_JULIA_VERSION
+#   matrix:
+#     - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+#     - JULIA_VER=v0.7.0-beta JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
 
 matrix:
+  include:
   - julia: nightly
     env: |
       JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
