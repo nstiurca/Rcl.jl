@@ -2,10 +2,9 @@
 
 # using Compat
 
-# Skipping MacroDefinition: RCUTILS_WARN_UNUSED __attribute__ ( ( warn_unused_result ) ) #
-# Skipping MacroDefinition: RCUTILS_THREAD_LOCAL _Thread_local #
-# Skipping MacroDefinition: RCUTILS_STRINGIFY_IMPL ( x ) # x #
-# Skipping MacroDefinition: RCUTILS_STRINGIFY ( x ) RCUTILS_STRINGIFY_IMPL ( x ) #
+# Skipping MacroDefinition: RCUTILS_WARN_UNUSED __attribute__ ( ( warn_unused_result ) )
+# Skipping MacroDefinition: RCUTILS_STRINGIFY_IMPL ( x ) # x
+# Skipping MacroDefinition: RCUTILS_STRINGIFY ( x ) RCUTILS_STRINGIFY_IMPL ( x )
 
 const RCUTILS_RET_OK = 0
 const RCUTILS_RET_WARN = 1
@@ -17,12 +16,13 @@ const RCUTILS_RET_STRING_MAP_ALREADY_INIT = 30
 const RCUTILS_RET_STRING_MAP_INVALID = 31
 const RCUTILS_RET_STRING_KEY_NOT_FOUND = 32
 const RCUTILS_RET_LOGGING_SEVERITY_MAP_INVALID = 40
+const RCUTILS_RET_LOGGING_SEVERITY_STRING_INVALID = 41
 
-# Skipping MacroDefinition: RCUTILS_EXPORT __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RCUTILS_PUBLIC __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RCUTILS_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) ) #
-# Skipping MacroDefinition: RCUTILS_CHECK_ALLOCATOR ( allocator , fail_statement ) if ( ! rcutils_allocator_is_valid ( allocator ) ) { fail_statement ; } #
-# Skipping MacroDefinition: RCUTILS_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement ) if ( ! rcutils_allocator_is_valid ( allocator ) ) { RCUTILS_SET_ERROR_MSG ( msg , rcutils_get_default_allocator ( ) ) fail_statement ; } /// Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
+# Skipping MacroDefinition: RCUTILS_EXPORT __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RCUTILS_PUBLIC __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RCUTILS_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) )
+# Skipping MacroDefinition: RCUTILS_CHECK_ALLOCATOR ( allocator , fail_statement ) if ( ! rcutils_allocator_is_valid ( allocator ) ) { fail_statement ; }
+# Skipping MacroDefinition: RCUTILS_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement ) if ( ! rcutils_allocator_is_valid ( allocator ) ) { RCUTILS_SET_ERROR_MSG ( msg , rcutils_get_default_allocator ( ) ) fail_statement ; }
 
 const rcutils_ret_t = Cint
 
@@ -34,15 +34,54 @@ mutable struct rcutils_allocator_t
     state::Ptr{Cvoid}
 end
 
+# Skipping MacroDefinition: rcutils_format_string ( allocator , format_string , ... ) rcutils_format_string_limit ( allocator , 2048 , format_string , __VA_ARGS__ )
+# Skipping MacroDefinition: RCUTILS_SAFE_FWRITE_TO_STDERR ( msg ) fwrite ( msg , sizeof ( char ) , strlen ( msg ) , stderr )
+# Skipping MacroDefinition: RCUTILS_CHECK_ARGUMENT_FOR_NULL ( argument , error_return_type , allocator ) RCUTILS_CHECK_FOR_NULL_WITH_MSG ( argument , # argument " argument is null" , return error_return_type , allocator )
+# Skipping MacroDefinition: RCUTILS_CHECK_FOR_NULL_WITH_MSG ( value , msg , error_statement , allocator ) if ( NULL == value ) { RCUTILS_SET_ERROR_MSG ( msg , allocator ) ; error_statement ; }
+# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG ( msg , allocator ) rcutils_set_error_state ( msg , __FILE__ , __LINE__ , allocator ) ;
+# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING ( allocator , format_string , ... ) do { char * output_msg = NULL ; output_msg = rcutils_format_string ( allocator , format_string , __VA_ARGS__ ) ; if ( output_msg ) { RCUTILS_SET_ERROR_MSG ( output_msg , allocator ) ; allocator . deallocate ( output_msg , allocator . state ) ; } else { RCUTILS_SAFE_FWRITE_TO_STDERR ( "Failed to allocate memory for error message\n" ) ; } } while ( false )
+
+mutable struct rcutils_error_state_t
+    message::Cstring
+    file::Cstring
+    line_number::Csize_t
+    allocator::rcutils_allocator_t
+end
+
 const rcl_get_default_allocator = rcutils_get_default_allocator
 const rcl_reallocf = rcutils_reallocf
 
-# Skipping MacroDefinition: RCL_CHECK_ALLOCATOR ( allocator , fail_statement ) RCUTILS_CHECK_ALLOCATOR ( allocator , fail_statement ) #
-# Skipping MacroDefinition: RCL_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement ) RCUTILS_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement ) #
-# Skipping MacroDefinition: RCL_WARN_UNUSED __attribute__ ( ( warn_unused_result ) ) #
-# Skipping MacroDefinition: RMW_EXPORT __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RMW_PUBLIC __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RMW_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) ) #
+# Skipping MacroDefinition: RCL_CHECK_ALLOCATOR ( allocator , fail_statement ) RCUTILS_CHECK_ALLOCATOR ( allocator , fail_statement )
+# Skipping MacroDefinition: RCL_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement ) RCUTILS_CHECK_ALLOCATOR_WITH_MSG ( allocator , msg , fail_statement )
+# Skipping MacroDefinition: RCL_WARN_UNUSED __attribute__ ( ( warn_unused_result ) )
+# Skipping MacroDefinition: RCUTILS_S_TO_NS ( seconds ) ( seconds * ( 1000 * 1000 * 1000 ) )
+# Skipping MacroDefinition: RCUTILS_MS_TO_NS ( milliseconds ) ( milliseconds * ( 1000 * 1000 ) )
+# Skipping MacroDefinition: RCUTILS_US_TO_NS ( microseconds ) ( microseconds * 1000 )
+# Skipping MacroDefinition: RCUTILS_NS_TO_S ( nanoseconds ) ( nanoseconds / ( 1000 * 1000 * 1000 ) )
+# Skipping MacroDefinition: RCUTILS_NS_TO_MS ( nanoseconds ) ( nanoseconds / ( 1000 * 1000 ) )
+# Skipping MacroDefinition: RCUTILS_NS_TO_US ( nanoseconds ) ( nanoseconds / 1000 )
+
+const RCUTILS_LOGGING_SEPARATOR_CHAR = '.'
+const RCUTILS_LOGGING_SEPARATOR_STRING = "."
+
+# begin enum RCUTILS_LOG_SEVERITY
+const RCUTILS_LOG_SEVERITY = UInt32
+const RCUTILS_LOG_SEVERITY_UNSET = (UInt32)(0)
+const RCUTILS_LOG_SEVERITY_DEBUG = (UInt32)(10)
+const RCUTILS_LOG_SEVERITY_INFO = (UInt32)(20)
+const RCUTILS_LOG_SEVERITY_WARN = (UInt32)(30)
+const RCUTILS_LOG_SEVERITY_ERROR = (UInt32)(40)
+const RCUTILS_LOG_SEVERITY_FATAL = (UInt32)(50)
+# end enum RCUTILS_LOG_SEVERITY
+
+const RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL = RCUTILS_LOG_SEVERITY_INFO
+
+# Skipping MacroDefinition: RCUTILS_LIKELY ( x ) __builtin_expect ( ( x ) , 1 )
+# Skipping MacroDefinition: RCUTILS_UNLIKELY ( x ) __builtin_expect ( ( x ) , 0 )
+# Skipping MacroDefinition: RCUTILS_LOGGING_AUTOINIT if ( RCUTILS_UNLIKELY ( ! g_rcutils_logging_initialized ) ) { rcutils_ret_t ret = rcutils_logging_initialize ( ) ; if ( ret != RCUTILS_RET_OK ) { RCUTILS_SAFE_FWRITE_TO_STDERR ( "[rcutils|" __FILE__ ":" RCUTILS_STRINGIFY ( __LINE__ ) "] error initializing logging: " ) ; RCUTILS_SAFE_FWRITE_TO_STDERR ( rcutils_get_error_string_safe ( ) ) ; RCUTILS_SAFE_FWRITE_TO_STDERR ( "\n" ) ; rcutils_reset_error ( ) ; } }
+# Skipping MacroDefinition: RMW_EXPORT __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RMW_PUBLIC __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RMW_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) )
 
 const RMW_RET_OK = 0
 const RMW_RET_ERROR = 1
@@ -76,13 +115,43 @@ const RCL_RET_TIMER_CANCELED = 801
 const RCL_RET_WAIT_SET_INVALID = 900
 const RCL_RET_WAIT_SET_EMPTY = 901
 const RCL_RET_WAIT_SET_FULL = 902
+const RCL_RET_INVALID_REMAP_RULE = 1001
+const RCL_RET_WRONG_LEXEME = 1002
+const RCL_RET_INVALID_PARAM_RULE = 1010
+const RCL_RET_INVALID_LOG_LEVEL_RULE = 1020
 
-# Skipping MacroDefinition: RCL_EXPORT __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RCL_PUBLIC __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: RCL_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) ) #
+# Skipping MacroDefinition: RCL_EXPORT __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RCL_PUBLIC __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: RCL_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) )
 
+const RCL_LOG_LEVEL_ARG_RULE = "__log_level:="
+const RCL_PARAM_FILE_ARG_RULE = "__params:="
 const RCL_NODE_OPTIONS_DEFAULT_DOMAIN_ID = SIZE_MAX
 const rcl_allocator_t = rcutils_allocator_t
+
+mutable struct rcutils_string_array_t
+    size::Csize_t
+    data::Ptr{Cstring}
+    allocator::rcutils_allocator_t
+end
+
+mutable struct rcutils_string_map_impl_t
+end
+
+mutable struct rcutils_string_map_t
+    impl::Ptr{Cvoid}
+end
+
+const rcutils_time_point_value_t = Int64
+const rcutils_duration_value_t = Int64
+
+mutable struct rcutils_log_location_t
+    function_name::Cstring
+    file_name::Cstring
+    line_number::Csize_t
+end
+
+const rcutils_logging_output_handler_t = Ptr{Cvoid}
 const rmw_ret_t = Cint
 
 mutable struct rmw_node_t
@@ -202,6 +271,13 @@ mutable struct rmw_gid_t
     data::NTuple{24, UInt8}
 end
 
+mutable struct rmw_serialized_message_t
+    buffer::Cstring
+    buffer_length::Csize_t
+    buffer_capacity::Csize_t
+    allocator::rcutils_allocator_t
+end
+
 mutable struct rmw_message_info_t
     publisher_gid::rmw_gid_t
     from_intra_process::Bool
@@ -217,7 +293,25 @@ const ANONYMOUS_2 = UInt32
 const RMW_QOS_POLICY_DEPTH_SYSTEM_DEFAULT = (UInt32)(0)
 # end enum ANONYMOUS_2
 
+# begin enum RWM_PUBLIC_TYPE
+const RWM_PUBLIC_TYPE = UInt32
+const RMW_LOG_SEVERITY_DEBUG = (UInt32)(10)
+const RMW_LOG_SEVERITY_INFO = (UInt32)(20)
+const RMW_LOG_SEVERITY_WARN = (UInt32)(30)
+const RMW_LOG_SEVERITY_ERROR = (UInt32)(40)
+const RMW_LOG_SEVERITY_FATAL = (UInt32)(50)
+# end enum RWM_PUBLIC_TYPE
+
+const rmw_log_severity_t = Cvoid
 const rcl_ret_t = rmw_ret_t
+const rcl_serialized_message_t = rmw_serialized_message_t
+
+mutable struct rcl_arguments_impl_t
+end
+
+mutable struct rcl_arguments_t
+    impl::Ptr{Cvoid}
+end
 
 mutable struct rcl_guard_condition_t
     impl::Ptr{Cvoid}
@@ -233,35 +327,18 @@ end
 mutable struct rcl_node_options_t
     domain_id::Csize_t
     allocator::rcl_allocator_t
+    use_global_arguments::Bool
+    arguments::rcl_arguments_t
 end
 
-# Skipping MacroDefinition: RCUTILS_SAFE_FWRITE_TO_STDERR ( msg ) fwrite ( msg , sizeof ( char ) , strlen ( msg ) , stderr ) #
-# Skipping MacroDefinition: RCUTILS_CHECK_ARGUMENT_FOR_NULL ( argument , error_return_type , allocator ) RCUTILS_CHECK_FOR_NULL_WITH_MSG ( argument , # argument " argument is null" , return error_return_type , allocator ) /// Check a value for null, with an error message and error statement.
-# Skipping MacroDefinition: RCUTILS_CHECK_FOR_NULL_WITH_MSG ( value , msg , error_statement , allocator ) if ( ! ( value ) ) { RCUTILS_SET_ERROR_MSG ( msg , allocator ) ; error_statement ; } /// Set the error message, as well as append the current file and line number.
-# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG ( msg , allocator ) rcutils_set_error_state ( msg , __FILE__ , __LINE__ , allocator ) ; /// Set the error message using a format string and format arguments.
-# Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING ( allocator , format_string , ... ) do { char * output_msg = NULL ; output_msg = rcutils_format_string ( allocator , format_string , __VA_ARGS__ ) ; if ( output_msg ) { RCUTILS_SET_ERROR_MSG ( output_msg , allocator ) ; allocator . deallocate ( output_msg , allocator . state ) ; } else { RCUTILS_SAFE_FWRITE_TO_STDERR ( "Failed to allocate memory for error message\n" ) ; } } while ( false ) /// Return `true` if the error is set, otherwise `false`.
-
-mutable struct rcutils_error_state_t
-    message::Cstring
-    file::Cstring
-    line_number::Csize_t
-    allocator::rcutils_allocator_t
-end
-
-# Skipping MacroDefinition: ROSIDL_GENERATOR_C_EXPORT __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: ROSIDL_GENERATOR_C_PUBLIC __attribute__ ( ( visibility ( "default" ) ) ) #
-# Skipping MacroDefinition: ROSIDL_GENERATOR_C_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) ) #
-# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , function_name , package_name , interface_type , interface_name ) typesupport_name ## __ ## function_name ## __ ## package_name ## __ ## interface_type ## __ ## interface_name #
-# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME ( typesupport_name , package_name , interface_type , message_name ) ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , get_message_type_support_handle , package_name , interface_type , message_name ) #
-# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME ( typesupport_name , package_name , service_name ) ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , get_service_type_support_handle , package_name , srv , service_name ) #
-# Skipping MacroDefinition: ROSIDL_GET_MSG_TYPE_SUPPORT ( PkgName , MsgSubfolder , MsgName ) ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME ( rosidl_typesupport_c , PkgName , MsgSubfolder , MsgName ) ( ) #
-# Skipping MacroDefinition: ROSIDL_GET_SRV_TYPE_SUPPORT ( PkgName , SrvName ) ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME ( rosidl_typesupport_c , PkgName , SrvName ) ( ) #
-# Skipping MacroDefinition: RCUTILS_S_TO_NS ( seconds ) ( seconds * ( 1000 * 1000 * 1000 ) ) /// Convenience macro to convert milliseconds to nanoseconds.
-# Skipping MacroDefinition: RCUTILS_MS_TO_NS ( milliseconds ) ( milliseconds * ( 1000 * 1000 ) ) /// Convenience macro to convert microseconds to nanoseconds.
-# Skipping MacroDefinition: RCUTILS_US_TO_NS ( microseconds ) ( microseconds * 1000 ) /// Convenience macro to convert nanoseconds to seconds.
-# Skipping MacroDefinition: RCUTILS_NS_TO_S ( nanoseconds ) ( nanoseconds / ( 1000 * 1000 * 1000 ) ) /// Convenience macro to convert nanoseconds to milliseconds.
-# Skipping MacroDefinition: RCUTILS_NS_TO_MS ( nanoseconds ) ( nanoseconds / ( 1000 * 1000 ) ) /// Convenience macro to convert nanoseconds to microseconds.
-# Skipping MacroDefinition: RCUTILS_NS_TO_US ( nanoseconds ) ( nanoseconds / 1000 ) /// A single point in time, measured in nanoseconds since the Unix epoch.
+# Skipping MacroDefinition: ROSIDL_GENERATOR_C_EXPORT __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: ROSIDL_GENERATOR_C_PUBLIC __attribute__ ( ( visibility ( "default" ) ) )
+# Skipping MacroDefinition: ROSIDL_GENERATOR_C_LOCAL __attribute__ ( ( visibility ( "hidden" ) ) )
+# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , function_name , package_name , interface_type , interface_name ) typesupport_name ## __ ## function_name ## __ ## package_name ## __ ## interface_type ## __ ## interface_name
+# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME ( typesupport_name , package_name , interface_type , message_name ) ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , get_message_type_support_handle , package_name , interface_type , message_name )
+# Skipping MacroDefinition: ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME ( typesupport_name , package_name , service_name ) ROSIDL_TYPESUPPORT_INTERFACE__SYMBOL_NAME ( typesupport_name , get_service_type_support_handle , package_name , srv , service_name )
+# Skipping MacroDefinition: ROSIDL_GET_MSG_TYPE_SUPPORT ( PkgName , MsgSubfolder , MsgName ) ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME ( rosidl_typesupport_c , PkgName , MsgSubfolder , MsgName ) ( )
+# Skipping MacroDefinition: ROSIDL_GET_SRV_TYPE_SUPPORT ( PkgName , SrvName ) ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME ( rosidl_typesupport_c , PkgName , SrvName ) ( )
 
 const RCL_S_TO_NS = RCUTILS_S_TO_NS
 const RCL_MS_TO_NS = RCUTILS_MS_TO_NS
@@ -270,7 +347,7 @@ const RCL_NS_TO_S = RCUTILS_NS_TO_S
 const RCL_NS_TO_MS = RCUTILS_NS_TO_MS
 const RCL_NS_TO_US = RCUTILS_NS_TO_US
 
-# Skipping MacroDefinition: RMW_STRINGIFY ( x ) RCUTILS_STRINGIFY ( x ) #
+# Skipping MacroDefinition: RMW_STRINGIFY ( x ) RCUTILS_STRINGIFY ( x )
 
 const RMW_WARN_UNUSED = RCUTILS_WARN_UNUSED
 const rosidl_message_typesupport_handle_function = Ptr{Cvoid}
@@ -345,21 +422,6 @@ mutable struct rcl_service_options_t
     allocator::rcl_allocator_t
 end
 
-mutable struct rcutils_string_array_t
-    size::Csize_t
-    data::Ptr{Cstring}
-    allocator::rcutils_allocator_t
-end
-
-mutable struct rcutils_string_map_impl_t
-end
-
-mutable struct rcutils_string_map_t
-    impl::Ptr{Cvoid}
-end
-
-const rcutils_time_point_value_t = UInt64
-const rcutils_duration_value_t = Int64
 const rcl_time_point_value_t = rcutils_time_point_value_t
 const rcl_duration_value_t = rcutils_duration_value_t
 

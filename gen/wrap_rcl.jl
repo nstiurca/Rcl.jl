@@ -3,12 +3,14 @@
 # Based heavily on CUFFT.jl/gen/wrap_cufft.jl
 # https://github.com/JuliaArchive/CUFFT.jl/blob/master/gen/wrap_cufft.jl
 
+# Note: needs package libclang-dev
+
 using Clang, Clang.cindex
 # We'll replace some of the wrap functions, and we need to call the following:
 import Clang.wrap_c: repr_jl, rep_type, rep_args, name_safe
 
 const ROS_DISTRO = ENV["ROS_DISTRO"]
-@assert ROS_DISTRO == "ardent"  # the only available version of ROS2 for now
+@assert ROS_DISTRO == "bouncy"  # the only supported version of ROS2 for now
 const AMENT_PREFIX_PATH = ENV["AMENT_PREFIX_PATH"]
 const ROS_INCLUDE_PATH = joinpath(AMENT_PREFIX_PATH, "include")
 
@@ -24,7 +26,7 @@ for (lib, hdr) in (("rcl", "rcl.h"),)
                         header_library = _ -> "lib$lib",
 
                         clang_includes=[
-                            "/opt/ros/ardent/include",
+                            ROS_INCLUDE_PATH,
                             "/usr/include",
                             "/usr/lib/llvm-3.9/lib/clang/3.9.1/include"],
                         header_wrapped = (header_file, cursor_name) -> (
