@@ -22,9 +22,9 @@ addons:
 #       - ros-bouncy-rmw-implementation
 #       - ros-bouncy-rosidl-default-runtime
 
-env:
-  global:
-    - TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
+#env:
+#  global:
+#    - TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
   #  - JULIA_VER=$TRAVIS_JULIA_VERSION
   # matrix:
   #   - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
@@ -33,9 +33,13 @@ env:
 matrix:
   include:
   - julia: nightly
-    env:  JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+    env: |
+      JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+      TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
   - julia: 0.7.0-beta
-    env: JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
+    env: |
+      JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
+      TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
 
 before_install:
   - docker pull osrf/ros2:bouncy-core   # TODO: maybe bouncy-basic might be better? we'll see
