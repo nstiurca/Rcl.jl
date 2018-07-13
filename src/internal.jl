@@ -17,12 +17,9 @@ const RCUTILS_WARN_UNUSED = nothing
 
 
 # dynamically load the ROS2 libraries
-include("find_ros2.jl")
-const locations = [ROS_LIB_PATH]
-
-const librmw = find_library(["librmw.$dlext"], locations)
-const librcl = find_library(["librcl.$dlext"], locations)
-const librcutils = find_library(["librcutils.$dlext"], locations)
+const librmw = find_library(["librmw.$dlext"])
+const librcl = find_library(["librcl.$dlext"])
+const librcutils = find_library(["librcutils.$dlext"])
 
 # const librmw = dlopen(librmw_path)
 # const librcutils = dlopen(librcutils_path)
