@@ -13,6 +13,8 @@ include("node_base.jl")
 end
 
 export rcl
+using .rcl: name, namespace
+export name, namespace
 
 # abstract type Node end
 # abstract type Logger end

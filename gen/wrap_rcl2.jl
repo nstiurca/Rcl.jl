@@ -14,7 +14,6 @@ clang_includes=[
     ROS_INCLUDE_PATH,
     "/usr/include",
     "/usr/lib/llvm-6.0/lib/clang/6.0.0/include",    # stdbool.h
-    "/usr/lib/llvm-3.9/lib/clang/3.9.1/include",    # stdbool.h
 ]
 
 function header_wrapped(header_file, cursor_name)
