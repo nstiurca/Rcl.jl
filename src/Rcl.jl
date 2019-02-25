@@ -1,20 +1,22 @@
 module Rcl
 
-module internal
-include("internal.jl")
-end
+include(joinpath(@__DIR__, "..", "gen", "LibRcl.jl"))
 
-using .internal: RclError
+# module internal
+# include("internal.jl")
+# end
+#
+using .LibRcl: RclError
 export RclError
-
-module rcl
-include("base.jl")
-include("node_base.jl")
-end
-
-export rcl
-using .rcl: name, namespace
-export name, namespace
+#
+# module rcl
+# include("base.jl")
+# include("node_base.jl")
+# end
+#
+# export rcl
+# using .rcl: name, namespace
+# export name, namespace
 
 # abstract type Node end
 # abstract type Logger end

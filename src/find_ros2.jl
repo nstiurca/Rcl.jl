@@ -1,3 +1,4 @@
+import Libdl: dlext, find_library
 # TODO: handle missing values gracefully
 
 const ROS_VERSION = VersionNumber(ENV["ROS_VERSION"])
@@ -12,3 +13,11 @@ const ROS_INCLUDE_PATH = joinpath(AMENT_PREFIX_PATH, "include")
 const ROS_LIB_PATH = joinpath(AMENT_PREFIX_PATH, "lib")
 
 const WRAPPED_ROS2_LIBS = ["rcutils", "rosidl_generator_c", "rmw", "rcl"]
+
+# dynamically load the ROS2 libraries
+for lib_name in WRAPPED_ROS2_LIBS
+    lib_var = Symbol("lib", lib_name)
+    lib_fname = "lib$lib_name.$dlext"
+    @info "Loading library $lib_name"
+    @eval const $lib_var = Symbol(find_library([$lib_fname]))
+end
