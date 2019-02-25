@@ -5,8 +5,10 @@ const ROS_DISTRO = ENV["ROS_DISTRO"]
 
 @assert ROS_VERSION >= v"2.0" "Only ROS 2.0 is supported by this package."
 #@assert ROS_DISTRO == "ardent"  # the only available version of ROS2 for now
-@assert ROS_DISTRO == "bouncy"  # the only available version of ROS2 for now
+@assert ROS_DISTRO == "crystal"  # the only available version of ROS2 for now
 
 const AMENT_PREFIX_PATH = ENV["AMENT_PREFIX_PATH"]
 const ROS_INCLUDE_PATH = joinpath(AMENT_PREFIX_PATH, "include")
 const ROS_LIB_PATH = joinpath(AMENT_PREFIX_PATH, "lib")
+
+const WRAPPED_ROS2_LIBS = ["rcutils", "rosidl_generator_c", "rmw", "rcl"]

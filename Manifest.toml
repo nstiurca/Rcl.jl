@@ -3,6 +3,12 @@
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
+[[CEnum]]
+deps = ["Test"]
+git-tree-sha1 = "68ec26437107fabd8bf4a420e0f9c38ce0e71978"
+uuid = "fa961155-64e5-5f13-b03f-caf6b980ea82"
+version = "0.1.1"
+
 [[Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
