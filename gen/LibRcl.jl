@@ -28,24 +28,11 @@ for lib in WRAPPED_ROS2_LIBS
 end
 
 # export everything
-#foreach(names(@__MODULE__, all=true)) do s
-#    if startswith(string(s), "SOME_PREFIX")
-#        @eval export $s
-#    end
-#end
-
-# dynamically load the ROS2 libraries
-# const librmw = find_library(["librmw.$dlext"])
-# const librcl = find_library(["librcl.$dlext"])
-# const librcutils = find_library(["librcutils.$dlext"])
-
-# const librmw = dlopen(librmw_path)
-# const librcutils = dlopen(librcutils_path)
-# const librcl = dlopen(librcl_path)
-
-# include the auto-gen-ed wrappers for the C functions/structs/constants
-# include("gen_librcl_h.jl")
-# include("gen_librcl.jl")
+foreach(names(@__MODULE__, all=true)) do s
+   if startswith(string(s), "rcl_")
+       @eval export $s
+   end
+end
 
 struct RclError <: Exception
     code :: Cint
@@ -64,5 +51,7 @@ function checkcall(code :: rcl_ret_t; suppress_throw=false)
     suppress_throw || throw(err)
     err
 end
+
+export RclError, checkcall
 
 end # module
