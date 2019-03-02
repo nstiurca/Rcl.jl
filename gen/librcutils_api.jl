@@ -99,19 +99,19 @@ end
 
 
 function rcutils_find(str, delimiter)
-    ccall((:rcutils_find, librcutils), Csize_t, (Cstring, UInt8), str, delimiter)
+    ccall((:rcutils_find, librcutils), Csize_t, (Cstring, Cchar), str, delimiter)
 end
 
 function rcutils_findn(str, delimiter, string_length)
-    ccall((:rcutils_findn, librcutils), Csize_t, (Cstring, UInt8, Csize_t), str, delimiter, string_length)
+    ccall((:rcutils_findn, librcutils), Csize_t, (Cstring, Cchar, Csize_t), str, delimiter, string_length)
 end
 
 function rcutils_find_last(str, delimiter)
-    ccall((:rcutils_find_last, librcutils), Csize_t, (Cstring, UInt8), str, delimiter)
+    ccall((:rcutils_find_last, librcutils), Csize_t, (Cstring, Cchar), str, delimiter)
 end
 
 function rcutils_find_lastn(str, delimiter, string_length)
-    ccall((:rcutils_find_lastn, librcutils), Csize_t, (Cstring, UInt8, Csize_t), str, delimiter, string_length)
+    ccall((:rcutils_find_lastn, librcutils), Csize_t, (Cstring, Cchar, Csize_t), str, delimiter, string_length)
 end
 # Julia wrapper for header: /opt/ros/crystal/include/rcutils/format_string.h
 # Automatically generated using Clang.jl wrap_c
@@ -215,11 +215,11 @@ end
 
 
 function rcutils_split(str, delimiter, allocator, string_array)
-    ccall((:rcutils_split, librcutils), rcutils_ret_t, (Cstring, UInt8, rcutils_allocator_t, Ptr{rcutils_string_array_t}), str, delimiter, allocator, string_array)
+    ccall((:rcutils_split, librcutils), rcutils_ret_t, (Cstring, Cchar, rcutils_allocator_t, Ptr{rcutils_string_array_t}), str, delimiter, allocator, string_array)
 end
 
 function rcutils_split_last(str, delimiter, allocator, string_array)
-    ccall((:rcutils_split_last, librcutils), rcutils_ret_t, (Cstring, UInt8, rcutils_allocator_t, Ptr{rcutils_string_array_t}), str, delimiter, allocator, string_array)
+    ccall((:rcutils_split_last, librcutils), rcutils_ret_t, (Cstring, Cchar, rcutils_allocator_t, Ptr{rcutils_string_array_t}), str, delimiter, allocator, string_array)
 end
 # Julia wrapper for header: /opt/ros/crystal/include/rcutils/stdatomic_helper.h
 # Automatically generated using Clang.jl wrap_c

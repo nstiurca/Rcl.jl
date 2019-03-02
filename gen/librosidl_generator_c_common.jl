@@ -50,7 +50,7 @@ struct rosidl_generator_c__byte__Sequence
 end
 
 struct rosidl_generator_c__char__Sequence
-    data::Ptr{UInt8}
+    data::Ptr{Cchar}
     size::Csize_t
     capacity::Csize_t
 end

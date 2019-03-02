@@ -26,12 +26,12 @@ const RCUTILS_ERROR_STATE_FILE_MAX_LENGTH = (((RCUTILS_ERROR_MESSAGE_MAX_LENGTH 
 # Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING ( format_string , ... ) do { char output_msg [ RCUTILS_ERROR_MESSAGE_MAX_LENGTH ] ; int ret = rcutils_snprintf ( output_msg , sizeof ( output_msg ) , format_string , __VA_ARGS__ ) ; if ( ret < 0 ) { RCUTILS_SAFE_FWRITE_TO_STDERR ( "Failed to call snprintf for error message formatting\n" ) ; } else { RCUTILS_SET_ERROR_MSG ( output_msg ) ; } } while ( 0 )
 
 struct rcutils_error_string_t
-    str::NTuple{1024, UInt8}
+    str::NTuple{1024, Cchar}
 end
 
 struct rcutils_error_state_t
-    message::NTuple{768, UInt8}
-    file::NTuple{229, UInt8}
+    message::NTuple{768, Cchar}
+    file::NTuple{229, Cchar}
     line_number::UInt64
 end
 
