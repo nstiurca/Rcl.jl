@@ -25,17 +25,17 @@ const RCUTILS_ERROR_STATE_FILE_MAX_LENGTH = (((RCUTILS_ERROR_MESSAGE_MAX_LENGTH 
 # Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG ( msg ) do { rcutils_set_error_state ( msg , __FILE__ , __LINE__ ) ; } while ( 0 )
 # Skipping MacroDefinition: RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING ( format_string , ... ) do { char output_msg [ RCUTILS_ERROR_MESSAGE_MAX_LENGTH ] ; int ret = rcutils_snprintf ( output_msg , sizeof ( output_msg ) , format_string , __VA_ARGS__ ) ; if ( ret < 0 ) { RCUTILS_SAFE_FWRITE_TO_STDERR ( "Failed to call snprintf for error message formatting\n" ) ; } else { RCUTILS_SET_ERROR_MSG ( output_msg ) ; } } while ( 0 )
 
-    str::NTuple{1024, Cchar}
 # This is a big structure, so ensure it gets heap allocated
 # Also, it helps to have a stable address for the `str` field
 mutable struct rcutils_error_string_t
+    str::NTuple{RCUTILS_ERROR_MESSAGE_MAX_LENGTH, Cchar}
 end
 
-    message::NTuple{768, Cchar}
-    file::NTuple{229, Cchar}
 # This is a big structure, so ensure it gets heap allocated
 # Also, it helps to have a stable address for the `message` and `file` fields.
 mutable struct rcutils_error_state_t
+    message::NTuple{RCUTILS_ERROR_STATE_MESSAGE_MAX_LENGTH, Cchar}
+    file::NTuple{RCUTILS_ERROR_STATE_FILE_MAX_LENGTH, Cchar}
     line_number::UInt64
 end
 
