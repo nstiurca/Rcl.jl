@@ -29,7 +29,7 @@ end
 
 # export everything
 foreach(names(@__MODULE__, all=true)) do s
-   if startswith(string(s), "rcl_")
+   if occursin(r"^(rcl|rcutils)_", string(s))
        @eval export $s
    end
 end
