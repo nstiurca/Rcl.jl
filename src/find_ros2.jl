@@ -1,4 +1,5 @@
 import Libdl: dlext, find_library
+# FIXME: THis should all probably be in some kind of __init__ (see Issue #2)
 # TODO: handle missing values gracefully
 
 const ROS_VERSION = VersionNumber(ENV["ROS_VERSION"])
