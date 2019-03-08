@@ -1,8 +1,3 @@
-# Julia 0.6 for now
-
-# Based heavily on CUFFT.jl/gen/wrap_cufft.jl
-# https://github.com/JuliaArchive/CUFFT.jl/blob/master/gen/wrap_cufft.jl
-
 using Clang
 
 include("../src/find_ros2.jl")
