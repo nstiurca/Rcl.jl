@@ -29,7 +29,7 @@ end
 
 # export everything
 foreach(names(@__MODULE__, all=true)) do s
-   if occursin(r"^(rcl|rcutils)_", string(s))
+   if occursin(r"^(rcl|rcutils|rosidl)_", string(s))
        @eval export $s
    end
 end
