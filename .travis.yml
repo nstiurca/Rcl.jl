@@ -1,0 +1,53 @@
+sudo: required
+
+services:
+  - docker
+
+language: julia
+#julia:
+#  - nightly
+#  - 0.7.0-beta
+
+addons:
+  apt:
+#     sources:
+#       - sourceline: deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main bionic main
+#       - key_url: http://repo.ros2.org/repos.key
+    packages:
+      - docker-ce
+# Travis is still running Trusty, but ROS2 is only available on Bionic and later
+# So, we can't just install from apt. :(
+#       - ros-bouncy-rcl
+#       - ros-bouncy-rcl-interfaces
+#       - ros-bouncy-rmw-implementation
+#       - ros-bouncy-rosidl-default-runtime
+
+#env:
+#  global:
+#    - TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
+#    - JULIA_VER=$TRAVIS_JULIA_VERSION
+#   matrix:
+#     - JULIA_VER=nightly JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+#     - JULIA_VER=v0.7.0-beta JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
+
+matrix:
+  include:
+  - julia: nightly
+    env: |
+      JULIA_TARBALL_URL=https://julialangnightlies-s3.julialang.org/bin/linux/x64/julia-latest-linux64.tar.gz
+      TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
+  - julia: 0.7.0-beta
+    env: |
+      JULIA_TARBALL_URL=https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-beta-linux-x86_64.tar.gz
+      TAG=julia-$TRAVIS_JULIA_VERSION-$TRAVIS_JOB_NUMBER
+
+before_install:
+  - docker pull osrf/ros2:bouncy-core   # TODO: maybe bouncy-basic might be better? we'll see
+  - docker build . -t nstiurca/rcl.jl:$TAG --build-arg JULIA_VER=$TRAVIS_JULIA_VERSION --build-arg JULIA_TARBALL_URL=$JULIA_TARBALL_URL
+
+before_script: |
+  docker run nstiurca/rcl.jl:$TAG julia -e 'versioninfo()'
+  docker run nstiurca/rcl.jl:$TAG apt-cache show ros-bouncy-rcl
+
+script: |
+  docker run nstiurca/rcl.jl:$TAG julia -e 'using Pkg; Pkg.test("Rcl")'
